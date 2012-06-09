@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using Core;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
@@ -14,6 +15,7 @@ namespace nPerfomance {
 		    _kernel.Bind<IEventAggregator>().To<EventAggregator>();
 
 		    _kernel.Bind<IShell>().To<ShellViewModel>();
+		    _kernel.Bind<IAnalyzer>().To<Analyzer>();
 		}
 
 		protected override object GetInstance(Type serviceType, string key){

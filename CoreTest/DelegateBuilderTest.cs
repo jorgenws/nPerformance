@@ -9,12 +9,12 @@ namespace CoreTest {
         [Test]
         public void Build_BuildAnActionFromTypeAndMethodInfo_ReturnsActionThatDoesNotThrow() {
             var analyzer = new Analyzer();
-            var type = analyzer.GetMarkedClasses((typeof (Test).Assembly)).First();
-            var methodInfo = analyzer.GetMarkedMethods(type).First();
+            PerformanceSet set = analyzer.GetPerformanceSets((typeof (Test).Assembly)).First();
+            PerformanceUnit performanceUnit = set.PerformanceUnits.First();
             
             var builder = new DelegateBuilder();
 
-            Action action = builder.Build(type, methodInfo);
+            Action action = builder.Build(set.Type, performanceUnit.MethodInfo);
 
             Assert.DoesNotThrow(action.Invoke);
         }

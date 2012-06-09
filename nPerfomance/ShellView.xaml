@@ -1,26 +1,43 @@
 ﻿<Window x:Class="nPerfomance.ShellView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-        xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
-        Width="800" Height="600">
+        xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" Width="800" Height="600">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        
-        <TreeView Grid.Column="0">
-            <!--<TreeView.ItemTemplate>
-                
-            </TreeView.ItemTemplate>-->   
-        </TreeView>
-        
-        <ContentControl Grid.Column="1"
-                        cal:View.Model="{Binding SelectedPerformace}" />
-            
-        
-        
-    </Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
+            <!--<TreeView Grid.Column="0">
+                <TreeView.ItemTemplate>
+
+                </TreeView.ItemTemplate>
+            </TreeView>-->
+
+            <ContentControl Grid.Column="1"
+                            cal:View.Model="{Binding SelectedPerformace}" />
+
+
+
+
+
+
+
+        </Grid>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left">
+            <Button Content="Open" Width="50">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <cal:ActionMessage MethodName="Open" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </StackPanel>
+    </Grid>
 </Window>

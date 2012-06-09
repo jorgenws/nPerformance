@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Core;
 using NUnit.Framework;
 
@@ -11,19 +10,20 @@ namespace CoreTest {
         [Test]
         public void GetMarkedClasses_TestHasAttributes_GetsTestType() {
             var analyzer = new Analyzer();
-            IEnumerable<Type> types = analyzer.GetMarkedClasses((typeof (Test)).Assembly);
-            Type type = types.First();            
-            Assert.IsTrue(type == typeof(Test));
+            IEnumerable<PerformanceSet> sets = analyzer.GetPerformanceSets((typeof (Test)).Assembly);
+            PerformanceSet type = sets.First();
+            Assert.IsTrue(type.Name == typeof(Test).Name);
         }
 
         [Test]
         public void GetMarkedMethods_TestMethodHasAttribute_ReturnstestMethod() {
             var analyzer = new Analyzer();
-            IEnumerable<MethodInfo> methodInfos = analyzer.GetMarkedMethods(typeof (Test));
-            MethodInfo methodInfo = methodInfos.First();
+            IEnumerable<PerformanceSet> sets = analyzer.GetPerformanceSets((typeof (Test).Assembly));
+            PerformanceSet set = sets.First();
+            PerformanceUnit unit = set.PerformanceUnits.First();
 
-            Assert.AreEqual("TestMethod", methodInfo.Name);
 
+            Assert.AreEqual("TestMethod", unit.Name);
         }
     }
 }

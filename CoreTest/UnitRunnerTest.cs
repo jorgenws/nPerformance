@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Core;
@@ -10,15 +11,18 @@ namespace CoreTest {
         [Test]
         public void Run_RunsAMarkedMethodOneHundredTimes_ReturnsResultWithOneHundredResults() {
             var analyzer = new Analyzer();
-            Type type = analyzer.GetMarkedClasses((typeof (Test).Assembly)).First();
-            MethodInfo methodInfo = analyzer.GetMarkedMethods(type).First();
+            IEnumerable<PerformanceSet> sets = analyzer.GetPerformanceSets((typeof (Test).Assembly));
+            PerformanceSet set = sets.First();
+            PerformanceUnit unit = set.PerformanceUnits.First();
+
+            MethodInfo methodInfo = unit.MethodInfo;
 
             var builder = new DelegateBuilder();
-            Action action = builder.Build(type, methodInfo);
+            Action action = builder.Build(set.Type, methodInfo);
 
             var runner = new UnitRunner();
 
-            Result result = runner.Run(type.Name, methodInfo.Name, action, 100);
+            Result result = runner.Run(set.Name, methodInfo.Name, action, unit.Runs);
 
             Assert.IsTrue(result.Success);
         }
